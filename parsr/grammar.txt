@@ -1,0 +1,44 @@
+Program -> #start Declaration-list $
+Declaration-list -> Declaration Declaration-list | EPSILON
+Declaration -> Declaration-initial Declaration-prime
+Declaration-initial ->  Type-specifier #define_id ID
+Declaration-prime -> Fun-declaration-prime | Var-declaration-prime
+Var-declaration-prime -> #end ;  | [ #pnum NUM ] #define_array ;
+Fun-declaration-prime ->  #before_dec_func ( Params #argument ) Compound-stmt #after_dec_func
+Type-specifier -> int | #checkvoid void
+Params -> int #define_id ID Param-prime Param-list | void
+Param-list -> , Param Param-list | EPSILON
+Param -> Declaration-initial Param-prime
+Param-prime -> [  ] #arrayinfunction | EPSILON
+Compound-stmt -> { Declaration-list Statement-list }
+Statement-list -> Statement Statement-list | EPSILON
+Statement -> Expression-stmt | Compound-stmt | Selection-stmt | Iteration-stmt | Return-stmt
+Expression-stmt -> Expression #end ; | break #breakhandle ; | ;
+Selection-stmt -> if ( Expression ) #save Statement else Statement
+Iteration-stmt -> #?! repeat #label Statement until  ( Expression ) #until #!
+Return-stmt -> return Return-stmt-prime #returns
+Return-stmt-prime -> ; | Expression ;
+Expression -> Simple-expression-zegond | #pid ID B
+B -> = Expression #assign | [ Expression ] #parray H | Simple-expression-prime
+H -> = Expression #assign | G D C
+Simple-expression-zegond -> Additive-expression-zegond C
+Simple-expression-prime -> Additive-expression-prime C
+C -> Relop Additive-expression #operation | EPSILON
+Relop -> #pnum <  | #pnum ==
+Additive-expression -> Term D
+Additive-expression-prime -> Term-prime D
+Additive-expression-zegond -> Term-zegond D
+D -> Addop Term #operation D | EPSILON
+Addop -> #pnum +  | #pnum -
+Term -> Factor G
+Term-prime -> Factor-prime G
+Term-zegond -> Factor-zegond G
+G -> #pnum *  Factor #operation G | EPSILON
+Factor -> ( Expression ) | #pid ID Var-call-prime | #pnum NUM
+Var-call-prime ->  #findfunction ( Args #parguments ) #pfunction #endfunction | Var-prime
+Var-prime -> [ Expression ] #parray | EPSILON
+Factor-prime -> #findfunction ( Args #parguments ) #pfunction #endfunction | EPSILON
+Factor-zegond -> ( Expression ) | #pnum NUM
+Args -> Arg-list | EPSILON
+Arg-list -> Expression Arg-list-prime
+Arg-list-prime -> , Expression Arg-list-prime | EPSILON
