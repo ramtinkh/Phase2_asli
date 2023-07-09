@@ -132,7 +132,7 @@ class CodeGenerator:
         # print(33,self.addresses, lookahead)
         if lookahead[0]=="main":
             self.pb[self.start]=f"(JP, {len(self.pb)},  ,   )"
-        if self.isfunction == False or self.addresses[lookahead[0]][0]==2000:
+        if self.isfunction == False or self.addresses[lookahead[0]][0] == 2000:
             self.pb.append(f"(ASSIGN, #0, {self.addresses[lookahead[0]][0]},   )")
             self.stack.append(self.addresses[lookahead[0]][0])
         else:

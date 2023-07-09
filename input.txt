@@ -1,11 +1,11 @@
-void main( void ) {
-	int prod;
-	int i;
-	prod = 1;
-	i = 1;
-	repeat {
-		prod = i * prod;
-		i = i + 2;
-	} until ( 6 < i )
-	output (prod);
+/*==== sample S1  ====*/
+
+void main(void){
+	int a;	
+	int c;
+	int b;
+	a = 5;
+	b = a + 1;
+    c = b + a;
+	output(c);
 }

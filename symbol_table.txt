@@ -7,5 +7,6 @@
 7.	until
 8.	return
 9.	main
-10.	prod
-11.	i
+10.	a
+11.	c
+12.	b
